@@ -1,0 +1,98 @@
+@import './index.module.scss';
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $bgColor;
+  color: $onBgColor;
+  border-top: 5px solid $primeColor;
+  width: 100%;
+}
+
+.AppHeader {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background-color: $bgColor;
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+  a {
+    text-decoration: none;
+  }
+}
+
+.AppLogo {
+  display: none;
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0 1em;
+  }
+
+  svg {
+    width: 1em;
+    fill: url(#FavoriteGradient);
+  }
+}
+
+.Nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+
+  a {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Raleway-Bold';
+    color: $onBgColor;
+    padding: 1em 0.5em;
+    margin: 0 0.25em;
+    text-decoration: none;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-bottom: 3px solid $primeColor;
+    }
+
+    &:active {
+      color: $primeShadeColor;
+      border-bottom-color: $primeShadeColor;
+    }
+  }
+  .NavSelected {
+    border-bottom: 3px solid $primeColor;
+  }
+
+  @media only screen and (min-width: 600px) {
+    margin-right: 1em;
+    width: auto;
+  }
+}
+
+.AppMain {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+.AppFooter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 5px solid $primeColor;
+}

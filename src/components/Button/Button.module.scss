@@ -1,0 +1,70 @@
+@import '../../index.module.scss';
+
+button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  padding: 0 1.5em;
+  border: 1px solid transparent;
+  border-radius: 1.5em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  color: $primeColor;
+  height: 3em;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+    fill: $primeColor;
+  }
+
+  &:hover {
+    background-color: $primeShadeColor;
+  }
+
+  &:active {
+    transform: translateY(3px);
+  }
+}
+
+.contained {
+  background: $primeColor;
+  color: $onPrimeColor;
+  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2);
+
+  svg {
+    fill: $onPrimeColor;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 8px hsla(0, 0%, 0%, 0.2);
+    background-color: $primeLightColor;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.outlined {
+  border: 1px solid $primeColor;
+}
+
+.icon {
+  border-radius: 50%;
+  justify-content: center;
+  width: 3em;
+  height: 3em;
+  padding: 0;
+
+  svg {
+    width: 2em;
+    height: 2em;
+    margin: 0;
+    fill: $primeColor;
+  }
+}

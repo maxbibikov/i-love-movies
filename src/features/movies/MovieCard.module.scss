@@ -1,0 +1,96 @@
+@import '../../index.module.scss';
+
+.appear-enter {
+  opacity: 0;
+}
+.appear-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.movie {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  background-color: $bgColor;
+  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2);
+  overflow: hidden;
+
+  .poster {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 2em 1em 1em;
+
+    .rating {
+      position: absolute;
+      top: -2.5em;
+      left: 0;
+      margin: 1em;
+      padding: 0.5em;
+      box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2);
+      background-color: $bgColor;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 2em;
+        height: 2em;
+        fill: url(#StarGradient);
+      }
+    }
+
+    .title {
+      margin: 0 0 0.3em 0;
+    }
+
+    .genres {
+      margin: 0;
+    }
+
+    .date {
+      margin: 0;
+      opacity: 80%;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 1em 1em;
+
+    .overview {
+      margin: 0;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 1em 1em;
+    margin-top: auto;
+
+    .icons {
+      display: flex;
+    }
+  }
+}
