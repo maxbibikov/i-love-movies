@@ -1,0 +1,90 @@
+@import '../../index.module.scss';
+
+.appear-enter {
+  opacity: 0;
+}
+.appear-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.container {
+  display: flex;
+  height: 150px;
+  border-radius: 15px;
+  background-color: $bgColor;
+  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2);
+  overflow: hidden;
+
+  .poster {
+    position: relative;
+    overflow: hidden;
+    width: 33%;
+
+    img {
+      width: 100%;
+    }
+
+    .rating {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin: 1em;
+      padding: 0.5em;
+      box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2);
+      background-color: $bgColor;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+
+      svg {
+        width: 1em;
+        height: 1em;
+        fill: url(#StarGradient);
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    width: 67%;
+    padding: 0.5em;
+
+    header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: start;
+
+      .title {
+        margin: 0 0 0.3em 0;
+      }
+
+      .genres {
+        margin: 0;
+      }
+
+      .date {
+        margin: 0;
+        opacity: 80%;
+      }
+    }
+
+    .overview {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: auto;
+      width: 100%;
+    }
+  }
+}

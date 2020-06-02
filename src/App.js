@@ -1,8 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
-import { Movies } from './features/movies/Movies';
+
 import Styles from './App.module.scss';
+
+// Components
+import { Movies } from './features/movies/Movies';
 import { ReactComponent as HeartIcon } from './assets/favorite-black-48dp.svg';
+import { Favorites } from './features/favorites/Favorites';
 
 function App() {
   return (
@@ -37,6 +41,9 @@ function App() {
               <Movies />
             </Route>
             <Route path="/tv-shows"></Route>
+            <Route path="/favorites">
+              <Favorites />
+            </Route>
           </Switch>
         </main>
         <footer className={Styles.AppFooter}>

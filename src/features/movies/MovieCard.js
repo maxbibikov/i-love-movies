@@ -2,6 +2,12 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { array } from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavorites,
+} from '../favorites/favoritesSlice';
 
 import Styles from './MovieCard.module.scss';
 
@@ -10,9 +16,11 @@ import { Movies } from './Movies';
 import { Button } from '../../components/Button/Button';
 import { ReactComponent as StarIcon } from '../../assets/star_rate-black-48dp.svg';
 import { ReactComponent as FavoriteOutlineIcon } from '../../assets/favorite_border-black-48dp.svg';
+import { ReactComponent as FavoriteIcon } from '../../assets/favorite-black-48dp.svg';
 import { ReactComponent as WatchListIcon } from '../../assets/add_to_queue-black-48dp.svg';
 
 export function MovieCard({
+  id,
   posterUrl,
   title,
   voteAverage,
@@ -21,7 +29,11 @@ export function MovieCard({
   movieGenreIds,
   allGenreList,
 }) {
+  const dispatch = useDispatch();
   const nodeRef = React.useRef(null);
+  const favorites = useSelector(selectFavorites);
+  const inFavorites =
+    favorites.length > 0 && favorites.find((favorite) => favorite.id === id);
   const renderOverview =
     overview.length > 150 ? `${overview.substring(0, 150)}...` : overview;
   let renderGenres = '';
@@ -35,8 +47,37 @@ export function MovieCard({
     renderGenres = movieGenreNames.slice(0, 3).join(', ');
   }
 
-  const favoriteBtn = (
-    <Button styleType="icon" aria-label="Add to favorites" onClick={() => {}}>
+  const onAddFavoriteClick = () => {
+    dispatch(
+      addFavorite({
+        id,
+        posterUrl,
+        title,
+        voteAverage,
+        releaseDate,
+        overview,
+      })
+    );
+  };
+
+  const onRemoveFavoriteClick = () => {
+    dispatch(removeFavorite(id));
+  };
+
+  const favoriteBtn = inFavorites ? (
+    <Button
+      styleType="icon"
+      aria-label="Remove from favorites"
+      onClick={onRemoveFavoriteClick}
+    >
+      <FavoriteIcon />
+    </Button>
+  ) : (
+    <Button
+      styleType="icon"
+      aria-label="Add to favorites"
+      onClick={onAddFavoriteClick}
+    >
       <FavoriteOutlineIcon />
     </Button>
   );
