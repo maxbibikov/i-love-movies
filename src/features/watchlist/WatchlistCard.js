@@ -2,23 +2,30 @@ import React from 'react';
 import { array } from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { useDispatch } from 'react-redux';
-import { removeFavorite } from '../favorites/favoritesSlice';
+import { removeFromWatchlist } from '../watchlist/watchlistSlice';
 
-import Styles from './FavoriteCard.module.scss';
+import Styles from './WatchlistCard.module.scss';
 
 // Components
 import { Button } from '../../components/Button/Button';
 import { ReactComponent as StarIcon } from '../../assets/star_rate-black-48dp.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete-black-48dp.svg';
 
-export function FavoriteCard({ id, posterUrl, title, voteAverage, overview }) {
+export function WatchlistCard({
+  id,
+  posterUrl,
+  title,
+  voteAverage,
+  overview,
+  count,
+}) {
   const dispatch = useDispatch();
   const nodeRef = React.useRef(null);
   const renderOverview =
     overview.length > 50 ? `${overview.substring(0, 50)}...` : overview;
 
-  const onRemoveFavoriteClick = () => {
-    dispatch(removeFavorite(id));
+  const onRemoveFromWatchlistClick = () => {
+    dispatch(removeFromWatchlist(id));
   };
 
   return (
@@ -59,8 +66,8 @@ export function FavoriteCard({ id, posterUrl, title, voteAverage, overview }) {
         <div className={Styles.actions}>
           <Button
             styleType="icon"
-            aria-label="Remove from favorites"
-            onClick={onRemoveFavoriteClick}
+            aria-label="Remove from watchlist"
+            onClick={onRemoveFromWatchlistClick}
           >
             <DeleteIcon />
           </Button>
@@ -70,12 +77,12 @@ export function FavoriteCard({ id, posterUrl, title, voteAverage, overview }) {
   );
 }
 
-FavoriteCard.propTypes = {
+WatchlistCard.propTypes = {
   movieGenreIds: array.isRequired,
   allGenreList: array.isRequired,
 };
 
-FavoriteCard.defaultProps = {
+WatchlistCard.defaultProps = {
   movieGenreIds: [],
   allGenreList: [],
 };

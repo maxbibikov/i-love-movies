@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
 
-import Styles from './App.module.scss';
-
 // Components
 import { Movies } from './features/movies/Movies';
-import { ReactComponent as HeartIcon } from './assets/favorite-black-48dp.svg';
 import { Favorites } from './features/favorites/Favorites';
+import { Watchlist } from './features/watchlist/Watchlist';
+
+// Assets
+import Styles from './App.module.scss';
+import { ReactComponent as HeartIcon } from './assets/favorite-black-48dp.svg';
 
 function App() {
   return (
@@ -24,9 +26,6 @@ function App() {
             <NavLink exact to="/" activeClassName={Styles.NavSelected}>
               Movies
             </NavLink>
-            <NavLink to="/tv-shows" activeClassName={Styles.NavSelected}>
-              TV
-            </NavLink>
             <NavLink to="/favorites" activeClassName={Styles.NavSelected}>
               Favorites
             </NavLink>
@@ -40,9 +39,11 @@ function App() {
             <Route exact path="/">
               <Movies />
             </Route>
-            <Route path="/tv-shows"></Route>
             <Route path="/favorites">
               <Favorites />
+            </Route>
+            <Route path="/watchlist">
+              <Watchlist />
             </Route>
           </Switch>
         </main>

@@ -8,6 +8,11 @@ import {
   removeFavorite,
   selectFavorites,
 } from '../favorites/favoritesSlice';
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+  selectWatchlist,
+} from '../watchlist/watchlistSlice';
 
 import Styles from './MovieCard.module.scss';
 
@@ -17,7 +22,8 @@ import { Button } from '../../components/Button/Button';
 import { ReactComponent as StarIcon } from '../../assets/star_rate-black-48dp.svg';
 import { ReactComponent as FavoriteOutlineIcon } from '../../assets/favorite_border-black-48dp.svg';
 import { ReactComponent as FavoriteIcon } from '../../assets/favorite-black-48dp.svg';
-import { ReactComponent as WatchListIcon } from '../../assets/add_to_queue-black-48dp.svg';
+import { ReactComponent as WatchlistListIcon } from '../../assets/add_to_queue-black-48dp.svg';
+import { ReactComponent as WatchlistListRemoveIcon } from '../../assets/remove_from_queue-black-48dp.svg';
 
 export function MovieCard({
   id,
@@ -32,8 +38,12 @@ export function MovieCard({
   const dispatch = useDispatch();
   const nodeRef = React.useRef(null);
   const favorites = useSelector(selectFavorites);
+  const watchlist = useSelector(selectWatchlist);
   const inFavorites =
     favorites.length > 0 && favorites.find((favorite) => favorite.id === id);
+  const inWatchlist =
+    watchlist.length > 0 &&
+    watchlist.find((watchlistMedia) => watchlistMedia.id === id);
   const renderOverview =
     overview.length > 150 ? `${overview.substring(0, 150)}...` : overview;
   let renderGenres = '';
@@ -63,6 +73,22 @@ export function MovieCard({
   const onRemoveFavoriteClick = () => {
     dispatch(removeFavorite(id));
   };
+  const onAddToWatchlistClick = () => {
+    dispatch(
+      addToWatchlist({
+        id,
+        posterUrl,
+        title,
+        voteAverage,
+        releaseDate,
+        overview,
+      })
+    );
+  };
+
+  const onRemoveFromWatchlistClick = () => {
+    dispatch(removeFromWatchlist(id));
+  };
 
   const favoriteBtn = inFavorites ? (
     <Button
@@ -82,13 +108,22 @@ export function MovieCard({
     </Button>
   );
 
-  const watchListBtn = (
+  const watchListBtn = inWatchlist ? (
+    <Button
+      styleType="outlined"
+      aria-label="Add to watchlist"
+      onClick={onRemoveFromWatchlistClick}
+    >
+      <WatchlistListRemoveIcon />
+      Watchlist
+    </Button>
+  ) : (
     <Button
       styleType="contained"
       aria-label="Add to watchlist"
-      onClick={() => {}}
+      onClick={onAddToWatchlistClick}
     >
-      <WatchListIcon />
+      <WatchlistListIcon />
       Watchlist
     </Button>
   );

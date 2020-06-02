@@ -15,7 +15,7 @@ export function Favorites() {
   ));
   return (
     <section className={Styles.container}>
-      <h1>Your Favorites</h1>
+      <h1>Favorites</h1>
       <div className={Styles.favoriteList}>{renderFavorites}</div>
     </section>
   );
