@@ -12,9 +12,7 @@ import { Pagination } from './Pagination';
 import {
   selectMovies,
   selectPage,
-  selectGenres,
   fetchMoviesAsync,
-  fetchGenresAsync,
   nextPage,
   previousPage,
   selectTotalPages,
@@ -22,15 +20,10 @@ import {
 
 export function Movies() {
   const movies = useSelector(selectMovies);
-  const allGenreList = useSelector(selectGenres);
   const page = useSelector(selectPage);
   const totalPages = useSelector(selectTotalPages);
   const filter = 'upcoming';
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(fetchGenresAsync());
-  }, [dispatch]);
 
   React.useEffect(() => {
     dispatch(fetchMoviesAsync({ filter, page }));
@@ -53,29 +46,7 @@ export function Movies() {
 
   const renderMovies = movies
     .filter(({ poster_path }) => poster_path !== null)
-    .map(
-      ({
-        id,
-        title,
-        overview,
-        poster_path,
-        vote_average,
-        release_date,
-        genre_ids,
-      }) => (
-        <MovieCard
-          key={id}
-          id={id}
-          posterUrl={poster_path}
-          title={title}
-          overview={overview}
-          voteAverage={vote_average}
-          releaseDate={release_date}
-          movieGenreIds={genre_ids}
-          allGenreList={allGenreList}
-        />
-      )
-    );
+    .map((movieData) => <MovieCard key={movieData.id} movieData={movieData} />);
 
   return (
     <section className={Styles.container}>

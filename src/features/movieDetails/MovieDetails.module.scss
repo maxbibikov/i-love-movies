@@ -1,0 +1,238 @@
+@import '../../index.module.scss';
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .fab {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 1em;
+
+    button {
+      background: linear-gradient(25deg, #d64c7f, #ee4758 50%);
+      width: 4em;
+      height: 4em;
+
+      svg {
+        fill: $onPrimeColor;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    @media only screen and (min-width: 900px) {
+      margin: 2em;
+    }
+  }
+}
+
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  z-index: 0;
+  overflow: hidden;
+  background-image: linear-gradient(
+    89.7deg,
+    rgba(0, 32, 95, 1) 2.8%,
+    rgba(132, 53, 142, 1) 97.8%
+  );
+  color: $onPrimeColor;
+
+  @media only screen and (min-width: 900px) {
+    flex-direction: row;
+  }
+
+  a {
+    color: $onPrimeColor;
+
+    &:hover {
+      color: $primeShadeColor;
+    }
+  }
+
+  .backgroundImg {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 255px;
+    object-fit: cover;
+    opacity: 0.2;
+
+    @media only screen and (min-width: 900px) {
+      height: auto;
+    }
+  }
+
+  .poster {
+    width: 150px;
+    box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+    border-radius: 16px;
+    margin: 0 0 1em;
+    object-fit: cover;
+
+    @media only screen and (min-width: 900px) {
+      width: 300px;
+      height: 500px;
+      margin-right: 2em;
+    }
+  }
+  .year {
+    font-family: 'Raleway-Regular';
+    color: $primeShadeColor;
+  }
+
+  .overview {
+    margin: 2.5em 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .mainCredits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2.5em;
+
+    p {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    @media only screen and (min-width: 900px) {
+      justify-content: flex-start;
+
+      p {
+        margin-right: 1em;
+      }
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  margin: 2em 0;
+  justify-content: center;
+}
+
+.trailers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: $primeDarkColor;
+  padding: 2em 0;
+
+  h1 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: $onPrimeColor;
+  }
+
+  .trailerBtn {
+    position: relative;
+    display: flex;
+    border: none;
+    background: none;
+    transition: all 0.3s ease;
+    height: 100%;
+
+    &:hover {
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.5em;
+      border: 2px solid $bgColor;
+      border-radius: 50%;
+      fill: $onPrimeColor;
+      z-index: 10;
+    }
+
+    img {
+      width: 100%;
+      box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+      border-radius: 16px;
+    }
+  }
+}
+
+.castContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+
+  h1 {
+    margin-left: 1em;
+  }
+
+  .castList {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    &:last-child::after {
+      visibility: hidden;
+      content: '.';
+    }
+    padding-bottom: 0.5em;
+
+    .actor {
+      min-width: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+      border-radius: 16px;
+      margin: 0.5em;
+      text-align: center;
+
+      img {
+        width: 100%;
+        border-top-right-radius: 16px;
+        border-top-left-radius: 16px;
+        margin-bottom: 0.5em;
+      }
+      strong {
+        display: flex;
+        padding: 0 0.5em;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        padding: 0 0.5em;
+        margin: 0;
+        margin-bottom: 0.5em;
+      }
+
+      &:first-child {
+        margin-left: 1em;
+      }
+      &:last-child {
+        margin-right: 1em;
+      }
+    }
+  }
+}

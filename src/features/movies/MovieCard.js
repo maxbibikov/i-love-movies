@@ -2,131 +2,34 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { array } from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addFavorite,
-  removeFavorite,
-  selectFavorites,
-} from '../favorites/favoritesSlice';
-import {
-  addToWatchlist,
-  removeFromWatchlist,
-  selectWatchlist,
-} from '../watchlist/watchlistSlice';
+import { Link } from 'react-router-dom';
 
 import Styles from './MovieCard.module.scss';
 
 // Components
 import { Movies } from './Movies';
-import { Button } from '../../components/Button/Button';
+import { FavoriteBtn } from '../favorites/FavoriteBtn';
+import { WatchlistBtn } from '../watchlist/WatchlistBtn';
+import { MovieGenres } from './MovieGenres';
 import { ReactComponent as StarIcon } from '../../assets/star_rate-black-48dp.svg';
-import { ReactComponent as FavoriteOutlineIcon } from '../../assets/favorite_border-black-48dp.svg';
-import { ReactComponent as FavoriteIcon } from '../../assets/favorite-black-48dp.svg';
-import { ReactComponent as WatchlistListIcon } from '../../assets/add_to_queue-black-48dp.svg';
-import { ReactComponent as WatchlistListRemoveIcon } from '../../assets/remove_from_queue-black-48dp.svg';
 
-export function MovieCard({
-  id,
-  posterUrl,
-  title,
-  voteAverage,
-  releaseDate,
-  overview,
-  movieGenreIds,
-  allGenreList,
-}) {
-  const dispatch = useDispatch();
+// Utils
+import { getPercentRating } from '../../utils';
+
+export function MovieCard({ movieData }) {
+  const {
+    id,
+    overview,
+    genre_ids,
+    title,
+    vote_average,
+    release_date,
+    poster_path,
+  } = movieData;
   const nodeRef = React.useRef(null);
-  const favorites = useSelector(selectFavorites);
-  const watchlist = useSelector(selectWatchlist);
-  const inFavorites =
-    favorites.length > 0 && favorites.find((favorite) => favorite.id === id);
-  const inWatchlist =
-    watchlist.length > 0 &&
-    watchlist.find((watchlistMedia) => watchlistMedia.id === id);
+
   const renderOverview =
     overview.length > 150 ? `${overview.substring(0, 150)}...` : overview;
-  let renderGenres = '';
-
-  if (movieGenreIds) {
-    // Compose current movie genre names array filtering all genres array by current movie genres array
-    const movieGenreNames = allGenreList
-      .filter(({ id }) => movieGenreIds.includes(id))
-      .map(({ name }) => name);
-
-    renderGenres = movieGenreNames.slice(0, 3).join(', ');
-  }
-
-  const onAddFavoriteClick = () => {
-    dispatch(
-      addFavorite({
-        id,
-        posterUrl,
-        title,
-        voteAverage,
-        releaseDate,
-        overview,
-      })
-    );
-  };
-
-  const onRemoveFavoriteClick = () => {
-    dispatch(removeFavorite(id));
-  };
-  const onAddToWatchlistClick = () => {
-    dispatch(
-      addToWatchlist({
-        id,
-        posterUrl,
-        title,
-        voteAverage,
-        releaseDate,
-        overview,
-      })
-    );
-  };
-
-  const onRemoveFromWatchlistClick = () => {
-    dispatch(removeFromWatchlist(id));
-  };
-
-  const favoriteBtn = inFavorites ? (
-    <Button
-      styleType="icon"
-      aria-label="Remove from favorites"
-      onClick={onRemoveFavoriteClick}
-    >
-      <FavoriteIcon />
-    </Button>
-  ) : (
-    <Button
-      styleType="icon"
-      aria-label="Add to favorites"
-      onClick={onAddFavoriteClick}
-    >
-      <FavoriteOutlineIcon />
-    </Button>
-  );
-
-  const watchListBtn = inWatchlist ? (
-    <Button
-      styleType="outlined"
-      aria-label="Add to watchlist"
-      onClick={onRemoveFromWatchlistClick}
-    >
-      <WatchlistListRemoveIcon />
-      Watchlist
-    </Button>
-  ) : (
-    <Button
-      styleType="contained"
-      aria-label="Add to watchlist"
-      onClick={onAddToWatchlistClick}
-    >
-      <WatchlistListIcon />
-      Watchlist
-    </Button>
-  );
 
   return (
     <CSSTransition
@@ -141,35 +44,39 @@ export function MovieCard({
       }}
     >
       <div className={Styles.movie} ref={nodeRef}>
-        <div className={Styles.poster}>
-          <img
-            alt={`poster: ${title}`}
-            src={`https://image.tmdb.org/t/p/w500${posterUrl}`}
-          />
-        </div>
+        <Link to={`/movies/${id}`}>
+          <div className={Styles.poster}>
+            <img
+              alt={`poster: ${title}`}
+              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+            />
+          </div>
+        </Link>
         <header>
           <div className={Styles.rating}>
-            {voteAverage > 0 ? (
+            {vote_average > 0 ? (
               <>
                 <StarIcon />
-                {Math.floor(voteAverage * 10)}%
+                {getPercentRating(vote_average)}%
               </>
             ) : (
               'No rating'
             )}
           </div>
-          <h3 className={Styles.title}>{title}</h3>
-          <p className={Styles.genres}>{renderGenres}</p>
+          <Link to={`/movies/${id}`}>
+            <h3 className={Styles.title}>{title}</h3>
+          </Link>
+          <MovieGenres genre_ids={genre_ids} />
           <p className={Styles.date}>
-            {dayjs(releaseDate).format('MMM DD, YYYY')}
+            {dayjs(release_date).format('MMM DD, YYYY')}
           </p>
         </header>
         <main className={Styles.content}>
           <p className={Styles.overview}>{renderOverview}</p>
         </main>
         <footer className={Styles.actions}>
-          {watchListBtn}
-          {favoriteBtn}
+          <WatchlistBtn movieData={movieData} />
+          <FavoriteBtn movieData={movieData} />
         </footer>
       </div>
     </CSSTransition>

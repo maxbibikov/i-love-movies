@@ -6,9 +6,8 @@ import Styles from './Watchlist.module.scss';
 
 export function Watchlist() {
   const watchlist = useSelector(selectWatchlist);
-
-  const renderWatchlist = watchlist.map((media, count) => (
-    <WatchlistCard {...media} count={count} />
+  const renderWatchlist = watchlist.map((media) => (
+    <WatchlistCard key={media.id} {...media} />
   ));
   return (
     <section className={Styles.container}>

@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
 
 // Components
 import { Movies } from './features/movies/Movies';
+import { MovieDetails } from './features/movieDetails/MovieDetails';
 import { Favorites } from './features/favorites/Favorites';
 import { Watchlist } from './features/watchlist/Watchlist';
 
@@ -39,6 +40,7 @@ function App() {
             <Route exact path="/">
               <Movies />
             </Route>
+            <Route path="/movies/:movieId" component={MovieDetails} />
             <Route path="/favorites">
               <Favorites />
             </Route>
