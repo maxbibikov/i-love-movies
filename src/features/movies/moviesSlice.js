@@ -1,16 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-const apiKey = 'f95b4780d100c9d941e03e79486e1503';
-const moviedbAPI = `https://api.themoviedb.org/3/`;
-const moviesAPI = (movieListType = 'top_rated', page = 1) =>
-  `${moviedbAPI}movie/${movieListType}?api_key=${apiKey}&language=en-US&region=US&page=${page}`;
-const genresAPI = (lang = 'en-US') =>
-  `${moviedbAPI}genre/movie/list?api_key=${apiKey}&language=${lang}`;
+import { movieDBApi } from '../../utils';
 
 export const fetchMoviesAsync = createAsyncThunk(
   'movies',
   async ({ movieListType, page }) => {
     try {
-      const response = await fetch(moviesAPI(movieListType, page));
+      const response = await fetch(movieDBApi.moviesUrl(movieListType, page));
       const data = await response.json();
 
       return data;
@@ -22,7 +17,7 @@ export const fetchMoviesAsync = createAsyncThunk(
 
 export const fetchGenresAsync = createAsyncThunk('genres', async () => {
   try {
-    const response = await fetch(genresAPI());
+    const response = await fetch(movieDBApi.genresUrl());
     const data = await response.json();
 
     return data;
