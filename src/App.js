@@ -6,6 +6,7 @@ import { Movies } from './features/movies/Movies';
 import { MovieDetails } from './features/movieDetails/MovieDetails';
 import { Favorites } from './features/favorites/Favorites';
 import { Watchlist } from './features/watchlist/Watchlist';
+import { ReactComponent as TMDBIcon } from './assets/tmdb_icon.svg';
 
 // Assets
 import Styles from './App.module.scss';
@@ -50,7 +51,23 @@ function App() {
           </Switch>
         </main>
         <footer className={Styles.AppFooter}>
-          <p>© {new Date().getFullYear()} Maksym Bibikov</p>
+          <p>
+            © {new Date().getFullYear()} Maksym Bibikov,{' '}
+            <a
+              href="https://github.com/maxbibikov/i-love-movies"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source Code
+            </a>
+          </p>
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <TMDBIcon style={{ width: '100px' }} />
+          </a>
         </footer>
       </div>
     </BrowserRouter>
