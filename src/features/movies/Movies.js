@@ -4,6 +4,7 @@ import Styles from './Movies.module.scss';
 
 // Components
 import { ReactComponent as ArrowUpIcon } from '../../assets/arrow_upward-black-48dp.svg';
+import { MoviesListSelector } from './MoviesListSelector';
 import { MovieCard } from './MovieCard';
 import { Button } from '../../components/Button/Button';
 import { Pagination } from './Pagination';
@@ -16,18 +17,19 @@ import {
   nextPage,
   previousPage,
   selectTotalPages,
+  selectMovieListType,
 } from './moviesSlice';
 
 export function Movies() {
+  const dispatch = useDispatch();
   const movies = useSelector(selectMovies);
   const page = useSelector(selectPage);
   const totalPages = useSelector(selectTotalPages);
-  const filter = 'upcoming';
-  const dispatch = useDispatch();
+  const movieListType = useSelector(selectMovieListType);
 
   React.useEffect(() => {
-    dispatch(fetchMoviesAsync({ filter, page }));
-  }, [dispatch, page]);
+    dispatch(fetchMoviesAsync({ movieListType, page }));
+  }, [dispatch, page, movieListType]);
 
   const onPreviousBtnClick = () => {
     dispatch(previousPage());
@@ -50,7 +52,8 @@ export function Movies() {
 
   return (
     <section className={Styles.container}>
-      <h1>Top Movies</h1>
+      <h1>Movies</h1>
+      <MoviesListSelector />
       <div className={Styles.moviesContainer}>{renderMovies}</div>
       <div className={Styles.row}>
         <Pagination
