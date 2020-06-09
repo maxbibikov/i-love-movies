@@ -8,6 +8,7 @@ import { MoviesListSelector } from './MoviesListSelector';
 import { MovieCard } from './MovieCard';
 import { Button } from '../../components/Button/Button';
 import { Pagination } from './Pagination';
+import { Loader } from '../../components/Loader';
 
 // State
 import {
@@ -18,6 +19,7 @@ import {
   previousPage,
   selectTotalPages,
   selectMovieListType,
+  selectStatus,
 } from './moviesSlice';
 
 export function Movies() {
@@ -26,6 +28,7 @@ export function Movies() {
   const page = useSelector(selectPage);
   const totalPages = useSelector(selectTotalPages);
   const movieListType = useSelector(selectMovieListType);
+  const status = useSelector(selectStatus);
 
   React.useEffect(() => {
     dispatch(fetchMoviesAsync({ movieListType, page }));
@@ -54,20 +57,25 @@ export function Movies() {
     <section className={Styles.container}>
       <h1>Movies</h1>
       <MoviesListSelector />
-      <div className={Styles.moviesContainer}>{renderMovies}</div>
-      <div className={Styles.row}>
-        <Pagination
-          totalPages={totalPages}
-          page={page}
-          onPreviousBtnClick={onPreviousBtnClick}
-          onNextBtnClick={onNextBtnClick}
-        />
-      </div>
-      <div className={Styles.row}>
-        <Button styleType="outlined" type="button" onClick={scrollToTop}>
-          <ArrowUpIcon /> Top
-        </Button>
-      </div>
+      {status === 'pending' ? (
+        <Loader />
+      ) : (
+        <>
+          <div className={Styles.moviesContainer}>{renderMovies}</div>
+          <div className={Styles.row}>
+            <Pagination
+              totalPages={totalPages}
+              page={page}
+              onPreviousBtnClick={onPreviousBtnClick}
+              onNextBtnClick={onNextBtnClick}
+            />
+          </div>
+          <Button styleType="outlined" type="button" onClick={scrollToTop}>
+            <ArrowUpIcon /> Top
+          </Button>
+        </>
+      )}
+      <div className={Styles.row}></div>
     </section>
   );
 }

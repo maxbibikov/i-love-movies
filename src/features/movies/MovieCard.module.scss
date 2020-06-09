@@ -29,6 +29,11 @@
 
   a {
     text-decoration: none;
+    color: $primeColor;
+
+    &:visited {
+      color: $primeColor;
+    }
   }
 
   header {

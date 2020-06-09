@@ -36,10 +36,11 @@ export const moviesSlice = createSlice({
   initialState: {
     entities: [],
     genres: [],
-    loading: 'idle',
+    status: 'idle',
     page: 1,
     totalPages: 1,
     movieListType: 'top_rated',
+    error: null,
   },
   reducers: {
     nextPage: (state) => {
@@ -65,11 +66,26 @@ export const moviesSlice = createSlice({
   },
 
   extraReducers: {
+    [fetchMoviesAsync.pending]: (state, action) => {
+      if (state.status === 'idle') {
+        state.status = 'pending';
+      }
+    },
     [fetchMoviesAsync.fulfilled]: (state, action) => {
-      state.entities =
-        action.payload.results && Array.from(action.payload.results);
-      state.page = action.payload.page;
-      state.totalPages = action.payload.total_pages;
+      if (state.status === 'pending') {
+        state.status = 'idle';
+        state.entities =
+          action.payload.results && Array.from(action.payload.results);
+        state.page = 1;
+        state.totalPages = action.payload.total_pages;
+      }
+    },
+    [fetchMoviesAsync.rejected]: (state, action) => {
+      if (state.status === 'pending') {
+        state.status = 'idle';
+        state.entities = [];
+        state.error = action.error;
+      }
     },
     [fetchGenresAsync.fulfilled]: (state, action) => {
       state.genres = Array.from(action.payload.genres);
@@ -92,5 +108,6 @@ export const selectGenres = (state) => state.movies.genres;
 export const selectPage = (state) => state.movies.page;
 export const selectTotalPages = (state) => state.movies.totalPages;
 export const selectMovieListType = (state) => state.movies.movieListType;
+export const selectStatus = (state) => state.movies.status;
 
 export default moviesSlice.reducer;

@@ -36,7 +36,7 @@ export function MovieCard({ movieData }) {
       nodeRef={nodeRef}
       appear
       in
-      timeout={1000}
+      timeout={200}
       unmountOnExit
       classNames={{
         appear: Styles['appear-enter'],

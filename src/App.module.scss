@@ -55,7 +55,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-family: 'Raleway-Bold';
+    font-family: 'Raleway-Bold', sans-serif;
     color: $onBgColor;
     padding: 1em 0.5em;
     margin: 0 0.25em;
@@ -88,6 +88,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2em;
+  width: 100%;
 }
 
 .AppFooter {

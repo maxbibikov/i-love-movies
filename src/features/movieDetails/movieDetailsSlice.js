@@ -23,7 +23,7 @@ const movieDetailsSlice = createSlice({
   initialState: {
     data: {},
     status: 'idle',
-    error: '',
+    error: null,
   },
   reducers: {
     clearMovieDetails: (state) => {
@@ -32,15 +32,28 @@ const movieDetailsSlice = createSlice({
   },
   extraReducers: {
     [fetchMovieDetailsAsync.pending]: (state, action) => {
-      state.status = 'idle';
+      if (state.status === 'idle') {
+        state.status = 'pending';
+      }
     },
     [fetchMovieDetailsAsync.fulfilled]: (state, action) => {
-      state.data = action.payload;
+      if (state.status === 'pending') {
+        state.status = 'idle';
+        state.data = action.payload;
+      }
+    },
+    [fetchMovieDetailsAsync.rejected]: (state, action) => {
+      if (state.status === 'pending') {
+        state.status = 'idle';
+        state.error = action.error;
+        state.data = {};
+      }
     },
   },
 });
 
 export const selectMovieDetails = (state) => state.movieDetails.data;
+export const selectStatus = (state) => state.movieDetails.status;
 export const { clearMovieDetails } = movieDetailsSlice.actions;
 
 export default movieDetailsSlice.reducer;

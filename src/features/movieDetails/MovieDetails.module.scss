@@ -1,11 +1,20 @@
 @import '../../index.module.scss';
 
+.appear-enter {
+  opacity: 0;
+}
+.appear-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
 .container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  flex-grow: 1;
 
   .fab {
     position: fixed;
@@ -89,7 +98,7 @@
     }
   }
   .year {
-    font-family: 'Raleway-Regular';
+    font-family: 'Raleway-Regular', sans-serif;
     color: $primeShadeColor;
   }
 
@@ -147,6 +156,8 @@
   .trailerBtn {
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     background: none;
     transition: all 0.3s ease;
@@ -156,19 +167,27 @@
       background: none;
       border: none;
       cursor: pointer;
-      opacity: 0.9;
+      opacity: 0.8;
+
+      svg {
+        transform: scale(1.2);
+      }
+    }
+
+    &:active {
+      transform: none;
     }
 
     svg {
+      width: 2em;
+      height: 2em;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       padding: 0.5em;
       border: 2px solid $bgColor;
       border-radius: 50%;
       fill: $onPrimeColor;
       z-index: 10;
+      transition: all 0.3s ease;
     }
 
     img {

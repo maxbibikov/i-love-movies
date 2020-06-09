@@ -1,11 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import dayjs from 'dayjs';
 
 import Styles from './MovieDetails.module.scss';
 
 // Components
+import { Loader } from '../../components/Loader';
 import { VideoModal } from './VideoModal';
 import { FavoriteBtn } from '../favorites/FavoriteBtn';
 import { WatchlistBtn } from '../watchlist/WatchlistBtn';
@@ -16,6 +18,7 @@ import {
   selectMovieDetails,
   fetchMovieDetailsAsync,
   clearMovieDetails,
+  selectStatus,
 } from './movieDetailsSlice';
 
 // Utils
@@ -26,6 +29,8 @@ export function MovieDetails() {
   const dispatch = useDispatch();
   const { movieId } = useParams('movieId');
   const movieDetails = useSelector(selectMovieDetails);
+  const status = useSelector(selectStatus);
+  const nodeRef = React.useRef(null);
 
   React.useEffect(() => {
     dispatch(fetchMovieDetailsAsync(movieId));
@@ -43,34 +48,48 @@ export function MovieDetails() {
     setShowVideoModal(false);
   };
 
-  if (movieDetails.id) {
-    const {
-      title,
-      release_date,
-      vote_average,
-      tagline,
-      overview,
-      genres,
-      runtime,
-      budget,
-      homepage,
-      videos,
-      credits,
-      poster_path,
-    } = movieDetails;
-    const videoKey =
-      videos &&
-      videos.results
-        .filter(({ site, type }) => site === 'YouTube' && type === 'Trailer')
-        .map(({ key }) => key)[0];
-    const posterUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
-    const backdropUrl = `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`;
-    const director = credits.crew.find(({ job }) => job === 'Director');
-    const novel = credits.crew.find(({ job }) => job === 'Novel');
-    const screenplay = credits.crew.find(({ job }) => job === 'Screenplay');
+  if (status === 'pending' || !movieDetails.id) {
+    return <Loader />;
+  }
 
-    return (
-      <section className={Styles.container}>
+  const {
+    title,
+    release_date,
+    vote_average,
+    tagline,
+    overview,
+    genres,
+    runtime,
+    budget,
+    homepage,
+    videos,
+    credits,
+    poster_path,
+  } = movieDetails;
+  const videoKey =
+    videos &&
+    videos.results
+      .filter(({ site, type }) => site === 'YouTube' && type === 'Trailer')
+      .map(({ key }) => key)[0];
+  const posterUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  const backdropUrl = `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`;
+  const director = credits.crew.find(({ job }) => job === 'Director');
+  const novel = credits.crew.find(({ job }) => job === 'Novel');
+  const screenplay = credits.crew.find(({ job }) => job === 'Screenplay');
+
+  return (
+    <CSSTransition
+      nodeRef={nodeRef}
+      appear
+      in
+      timeout={200}
+      unmountOnExit
+      classNames={{
+        appear: Styles['appear-enter'],
+        appearActive: Styles['appear-enter-active'],
+      }}
+    >
+      <section ref={nodeRef} className={Styles.container}>
         <header className={Styles.header}>
           <img className={Styles.backgroundImg} src={backdropUrl} alt={title} />
           <img className={Styles.poster} src={posterUrl} alt={title} />
@@ -163,13 +182,13 @@ export function MovieDetails() {
             <PlayIcon />
           </button>
         </section>
-        {showVideoModal && (
-          <VideoModal
-            videoKey={videoKey}
-            onCloseClick={closeModal}
-            title={title}
-          />
-        )}
+
+        <VideoModal
+          videoKey={videoKey}
+          onCloseClick={closeModal}
+          title={title}
+          showVideoModal={showVideoModal}
+        />
 
         {/* CAST */}
         <div className={Styles.castContainer}>
@@ -194,8 +213,6 @@ export function MovieDetails() {
           <FavoriteBtn movieData={movieDetails} />
         </div>
       </section>
-    );
-  }
-
-  return null;
+    </CSSTransition>
+  );
 }
