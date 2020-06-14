@@ -39,7 +39,7 @@ export function MoviesListSelector() {
 
   return (
     <div className={Styles.container}>
-      <button className={Styles.menuToggleBtn} onClick={onListBtnClick}>
+      <button data-testid="list-menu-toggle" className={Styles.menuToggleBtn} onClick={onListBtnClick}>
         {selectedTypeList}{' '}
         <ExpandIcon
           className={Styles.arrowIcon}
