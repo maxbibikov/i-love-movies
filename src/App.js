@@ -18,9 +18,9 @@ function App() {
       <div className={Styles.App}>
         <header className={Styles.AppHeader}>
           <Link to="/">
-            <h2 className={Styles.AppLogo}>
+            <h2 data-testid="logo" className={Styles.AppLogo}>
               I
-              <HeartIcon />
+              <HeartIcon title="love" />
               Movies
             </h2>
           </Link>
@@ -52,7 +52,7 @@ function App() {
         </main>
         <footer className={Styles.AppFooter}>
           <p>
-            © {new Date().getFullYear()} Maksym Bibikov,{' '}
+            © {new Date().getFullYear()} Max Bibikov,{' '}
             <a
               href="https://github.com/maxbibikov/i-love-movies"
               target="_blank"
@@ -66,7 +66,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <TMDBIcon style={{ width: '100px' }} />
+            <TMDBIcon title="the movie db" style={{ width: '100px' }} />
           </a>
         </footer>
       </div>
