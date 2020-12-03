@@ -3,7 +3,7 @@ import Styles from './Loader.module.scss';
 
 export function Loader() {
   return (
-    <div className={Styles.container}>
+    <div data-testid="loader" className={Styles.container}>
       <div className={Styles.spinner}>
         <div className={Styles.bounce1}></div>
         <div className={Styles.bounce2}></div>

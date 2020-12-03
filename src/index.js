@@ -5,6 +5,9 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as serviceWorker from './serviceWorker';
+if (process.env.NODE_ENV === 'development') {
+  require('./mocks');
+}
 
 ReactDOM.render(
   <React.StrictMode>

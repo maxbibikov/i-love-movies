@@ -43,7 +43,7 @@ export function MovieCard({ movieData }) {
         appearActive: Styles['appear-enter-active'],
       }}
     >
-      <div className={Styles.movie} ref={nodeRef}>
+      <div data-testid="movie-card" className={Styles.movie} ref={nodeRef}>
         <Link to={`/movies/${id}`}>
           <div className={Styles.poster}>
             <img

@@ -71,7 +71,6 @@ export const moviesSlice = createSlice({
         state.status = 'idle';
         state.entities =
           action.payload.results && Array.from(action.payload.results);
-        state.page = 1;
         state.totalPages = action.payload.total_pages;
       }
     },

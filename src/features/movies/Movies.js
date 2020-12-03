@@ -51,7 +51,12 @@ export function Movies() {
 
   const renderMovies = movies
     .filter(({ poster_path }) => poster_path !== null)
-    .map((movieData) => <MovieCard key={movieData.id} movieData={movieData} />);
+    .map((movieData) => (
+      <MovieCard
+        key={movieData.id}
+        movieData={movieData}
+      />
+    ));
 
   return (
     <section className={Styles.container}>
