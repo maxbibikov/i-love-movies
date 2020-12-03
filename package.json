@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "server": "serve -l 3000 build",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
@@ -63,8 +63,10 @@
   "devDependencies": {
     "@cypress/instrument-cra": "^1.1.1",
     "@testing-library/cypress": "^6.0.0",
+    "@testing-library/dom": "^7.16.2",
     "cypress": "^4.8.0",
     "eslint-plugin-cypress": "^2.11.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "msw": "^0.19.3",
     "node-sass": "^4.14.1",
     "start-server-and-test": "^1.11.0"

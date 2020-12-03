@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, wait } from './testUtils';
+import { render } from './testUtils';
+import { waitFor } from '@testing-library/dom';
 import App from './App';
 
 it('app renders with redux defaults and shows navigation, loader and footer', () => {
@@ -15,10 +16,11 @@ it('app renders with redux defaults and shows navigation, loader and footer', ()
 
 it('app shows list of movies', async () => {
   const { getByText, queryByTestId } = render(<App />);
-  await wait(() => {
+  await waitFor(() => {
     // Loader suppose to be hidden when movies will appear
     const loader = queryByTestId('loader');
     expect(loader).toBeNull();
     const movie = getByText(/the shawshank redemption/i);
+    expect(movie).toBeInTheDocument();
   });
 });
